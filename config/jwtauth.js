@@ -1,5 +1,7 @@
-exports.default = { 
-  jwtauth: function(api){
+'use strict'
+
+exports['default'] = {
+  jwtauth: (api) => {
     return {
       enabled: {
         web: true,
@@ -14,8 +16,8 @@ exports.default = {
   }
 }
 
-exports.test = { 
-  jwtauth: function(api){
+exports['test'] = {
+  jwtauth: (api) => {
     return {
       enabled: {
         web: false,
@@ -30,8 +32,8 @@ exports.test = {
   }
 }
 
-exports.production = { 
-  jwtauth: function(api){
+exports['production'] = {
+  jwtauth: (api) => {
     return {
       enabled: {
         web: true,

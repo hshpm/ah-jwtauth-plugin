@@ -18,14 +18,17 @@
     "authentication"
   ],
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=8.0.0"
+  },
+  "peerDependencies": {
+    "actionhero": "^19.0.4"
   },
   "dependencies": {
-    "jsonwebtoken": "^5.4.0"
+    "jsonwebtoken": "^8.3.0"
   },
   "devDependencies": {},
   "scripts": {
-    "postinstall": "scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js"
   },
   "readmeFilename": "README.md",
   "bugs": {
