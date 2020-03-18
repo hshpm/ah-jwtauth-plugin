@@ -67,6 +67,7 @@ module.exports = class JWTAuthMiddleware extends ActionHero.Initializer {
             api.jwtauth.processToken(token)
               .then(tokenData => {
                 data.connection._jwtTokenData = tokenData
+                data.connection._jwtToken = token
                 return true
               })
               .then(resolve)
