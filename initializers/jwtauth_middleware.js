@@ -44,7 +44,7 @@ module.exports = class JWTAuthMiddleware extends ActionHero.Initializer {
               if (tokenRequired) {
                 return reject({
                   code: 401,
-                  message: 'Invalid Authorization Header'
+                  message: 'Invalid authorization header'
                 })
               } else {
                 return resolve()
@@ -61,19 +61,20 @@ module.exports = class JWTAuthMiddleware extends ActionHero.Initializer {
           if (tokenRequired && !token) {
             return reject({
               code: 401,
-              message: 'Authorization Header Not Set'
+              message: 'Authorization header not set'
             })
           } else if (token) { // process token and save in connection
             api.jwtauth.processToken(token)
               .then(tokenData => {
                 data.connection._jwtTokenData = tokenData
-                data.connection._jwtToken = token
                 return true
               })
               .then(resolve)
               .catch(e => {
-                data.response.error = e
-                reject(e)
+                reject({
+                  code: 401,
+                  message: e
+                })
               })
           } else {
             return resolve()
