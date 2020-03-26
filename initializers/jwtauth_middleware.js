@@ -42,10 +42,9 @@ module.exports = class JWTAuthMiddleware extends ActionHero.Initializer {
             if (parts.length !== 2 || parts[0].toLowerCase() !== 'bearer') {
               // return error if token was required and missing
               if (tokenRequired) {
-                return reject({
-                  code: 401,
-                  message: 'Invalid authorization header'
-                })
+                data.connection.keepresponsecode = true;
+                data.connection.rawConnection.responseHttpCode = 401;
+                return reject("Invalid authorization header");
               } else {
                 return resolve()
               }
@@ -59,10 +58,9 @@ module.exports = class JWTAuthMiddleware extends ActionHero.Initializer {
           }
           // return error if token was missing but marked as required
           if (tokenRequired && !token) {
-            return reject({
-              code: 401,
-              message: 'Authorization header not set'
-            })
+            data.connection.keepresponsecode = true;
+            data.connection.rawConnection.responseHttpCode = 401;
+            return reject("Invalid authorization header");
           } else if (token) { // process token and save in connection
             api.jwtauth.processToken(token)
               .then(tokenData => {
@@ -71,10 +69,9 @@ module.exports = class JWTAuthMiddleware extends ActionHero.Initializer {
               })
               .then(resolve)
               .catch(e => {
-                reject({
-                  code: 401,
-                  message: e
-                })
+                data.connection.keepresponsecode = true;
+                data.connection.rawConnection.responseHttpCode = 401;
+                return reject(e);
               })
           } else {
             return resolve()
